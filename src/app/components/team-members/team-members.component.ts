@@ -1,14 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ModalComponent} from '../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-team-members',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
   templateUrl: './team-members.component.html',
   styleUrl: './team-members.component.scss'
 })
 export class TeamMembersComponent {
+
   members = [
     {
       name: 'Farouk Muhammed',
@@ -42,18 +45,73 @@ export class TeamMembersComponent {
     },
     // Add more members as needed to test pagination
   ];
-
   // Pagination properties
   currentPage = 1;
   itemsPerPage = 3; // Assuming 3 items per page as in the screenshot
   totalPages = Math.ceil(this.members.length / this.itemsPerPage);
-  pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  pages = Array.from({length: this.totalPages}, (_, i) => i + 1);
+  // Modal & form state
+  isAddModalOpen = false;
+  addMemberForm!: FormGroup;
 
+  constructor(private fb: FormBuilder) {
+    this.initAddMemberForm();
+  }
 
   get paginatedMembers() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.members.slice(startIndex, endIndex);
+  }
+
+  initAddMemberForm = () => {
+    this.addMemberForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: ['', Validators.required],
+      status: ['Active'],
+      teams: ['']
+    });
+  }
+
+  openAddMemberModal = () => {
+    this.isAddModalOpen = true;
+  }
+
+  closeAddMemberModal = () => {
+    this.isAddModalOpen = false;
+    this.addMemberForm.reset({status: 'Active'});
+  }
+
+  addMember = () => {
+    if (this.addMemberForm.invalid) {
+      this.addMemberForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue = this.addMemberForm.value;
+    const teamsArray = formValue.teams
+      ? formValue.teams.split(',').map((t: string) => t.trim())
+      : [];
+    console.log('form', this.addMemberForm, formValue)
+    this.members.push({
+      name: formValue.name,
+      email: formValue.email,
+      role: formValue.role,
+      status: formValue.status,
+      statusColor: 'bg-green-500',
+      teams: teamsArray,
+      additionalTeams: 0,
+      avatarUrl:
+        'https://placehold.co/40x40/E2E8F0/718096?text=' +
+        formValue.name
+          .split(' ')
+          .map((n: string) => n[0])
+          .join('')
+    });
+    console.log('members', this.members)
+
+    this.closeAddMemberModal();
   }
 
   goToPage(page: number) {
