@@ -1,0 +1,21 @@
+<app-modal [isOpen]="isOpen" title="Edit Team Member" (close)="closeModal()">
+  <form [formGroup]="editForm" (ngSubmit)="saveChanges()">
+    <div class="space-y-4">
+      <input formControlName="name" type="text" placeholder="Name" class="w-full border p-2 rounded"/>
+      <input formControlName="email" type="email" placeholder="Email" class="w-full border p-2 rounded bg-gray-100"
+             [disabled]="true"/>
+      <input formControlName="role" type="text" placeholder="Role" class="w-full border p-2 rounded"/>
+      <select formControlName="status" class="w-full border p-2 rounded">
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+      <input formControlName="teams" type="text" placeholder="Teams (comma-separated)"
+             class="w-full border p-2 rounded"/>
+    </div>
+
+    <div class="mt-6 flex justify-end space-x-3">
+      <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Save Changes</button>
+    </div>
+  </form>
+</app-modal>
