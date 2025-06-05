@@ -1,6 +1,12 @@
 <div class="p-6 bg-white rounded-xl shadow-lg font-['Inter',_sans-serif] text-gray-700 w-full max-w-6xl mx-auto">
   <!--  Modal content goes here.-->
   <app-modal [isOpen]="isAddModalOpen" title="Add Team Member" (close)="closeAddMemberModal()">
+    <div *ngIf="successMessage && !loading" class="p-3 mt-4 bg-green-100 text-green-800 rounded">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="p-3 mt-4 bg-red-100 text-red-800 rounded">
+      {{ errorMessage }}
+    </div>
     <form [formGroup]="addMemberForm" (ngSubmit)="addMember()" class="space-y-4">
       <div>
         <label class="block text-sm font-medium mb-1">Full Name</label>
@@ -65,13 +71,16 @@
         ></textarea>
       </div>
 
-      <div class="pt-2">
+      <div class="pt-2 space-x-3">
         <button
           type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          [disabled]="addMemberForm.invalid"
+          class="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [disabled]="addMemberForm.invalid || loading"
         >
-          Add Member
+          <span *ngIf="loading"
+                class="animate-spin h-6 w-6 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+          <span *ngIf="!loading">Add Member</span>
+          <span *ngIf="loading">Processing...</span>
         </button>
       </div>
 
@@ -79,13 +88,13 @@
   </app-modal>
   <!--  End of Modal content goes here.-->
 
-<!--  Edit modal-->
+  <!--  Edit modal-->
   <app-edit-team-member
     [isOpen]="editModalOpen"
     [member]="selectedMember"
     (close)="closeEditModal()">
   </app-edit-team-member>
-<!--End of Edit modal-->
+  <!--End of Edit modal-->
 
   <!-- Delete Confirm Modal -->
   <app-delete-team-member
@@ -106,7 +115,7 @@
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-xl font-semibold text-gray-900">Team members</h2>
     <div class="flex space-x-2">
-      <button (click)="openFilters()"
+      <button
               class="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         <!-- SVG Filter Icon -->
         <svg class="w-5 h-5 mr-2 text-gray-500" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)"
@@ -194,9 +203,9 @@
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
+                    d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"/>
               <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
           </button>
           <button (click)="openEditModal(member)" class="text-gray-400 hover:text-indigo-600 p-1 ml-2">

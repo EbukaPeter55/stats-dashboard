@@ -16,6 +16,9 @@ export class EditTeamMemberComponent implements OnInit, OnChanges {
   @Input() isOpen = false;
   @Input() member!: TeamMember | null;
   @Output() close = new EventEmitter<void>();
+  loading = false;
+  successMessage = '';
+  errorMessage = '';
 
   editForm!: FormGroup;
 
@@ -54,6 +57,9 @@ export class EditTeamMemberComponent implements OnInit, OnChanges {
       this.editForm.markAllAsTouched();
       return;
     }
+    this.loading = true;
+    this.successMessage = '';
+    this.errorMessage = '';
 
     const formValue = this.editForm.getRawValue();
     if (this.member) {
@@ -67,8 +73,22 @@ export class EditTeamMemberComponent implements OnInit, OnChanges {
         additionalTeams: this.member.additionalTeams,
         statusColor: this.member.statusColor
       };
-      this.teamMemberService.updateMember(updatedMember);
-      this.close.emit();
+      setTimeout(() => {
+        try {
+          this.teamMemberService.updateMember(updatedMember);
+          this.loading = false;
+          this.successMessage = 'Member details updated successfully!';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.loading = false;
+            this.close.emit()
+          },1500
+          );
+        } catch (err) {
+          this.loading = false;
+          this.errorMessage = 'Something went wrong while saving.';
+        }
+      }, 1500);
     }
   }
 

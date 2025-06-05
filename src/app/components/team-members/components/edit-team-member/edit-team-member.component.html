@@ -1,4 +1,11 @@
 <app-modal [isOpen]="isOpen" title="Edit Team Member" (close)="closeModal()">
+  <!-- Success / Error messages -->
+  <div *ngIf="successMessage && !loading" class="p-3 mt-4 bg-green-100 text-green-800 rounded">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="p-3 mt-4 bg-red-100 text-red-800 rounded">
+    {{ errorMessage }}
+  </div>
   <form [formGroup]="editForm" (ngSubmit)="saveChanges()">
     <div class="space-y-4">
       <input formControlName="name" type="text" placeholder="Name" class="w-full border p-2 rounded"/>
@@ -12,10 +19,12 @@
       <input formControlName="teams" type="text" placeholder="Teams (comma-separated)"
              class="w-full border p-2 rounded"/>
     </div>
-
     <div class="mt-6 flex justify-end space-x-3">
       <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Save Changes</button>
+      <button type="submit" [disabled]="loading" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center">
+        <span *ngIf="loading" class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+        <span *ngIf="!loading">Save Changes</span>
+      </button>
     </div>
   </form>
 </app-modal>

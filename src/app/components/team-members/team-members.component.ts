@@ -33,6 +33,9 @@ export class TeamMembersComponent implements OnInit {
   deleteModalOpen = false;
   memberToDelete: TeamMember | null = null;
   detailsModalOpen = false;
+  loading = false;
+  successMessage = '';
+  errorMessage = '';
 
 
   constructor(private fb: FormBuilder, private teamMemberService: TeamMembersService) {
@@ -101,6 +104,9 @@ export class TeamMembersComponent implements OnInit {
       this.addMemberForm.markAllAsTouched();
       return;
     }
+    this.loading = true;
+    this.successMessage = '';
+    this.errorMessage = '';
 
     const formValue = this.addMemberForm.value;
     const teamsArray = formValue.teams ? formValue.teams.split(',').map((t: string) => t.trim()) : [];
@@ -121,8 +127,23 @@ export class TeamMembersComponent implements OnInit {
           .join('')
     };
 
-    this.teamMemberService.addMember(newMember);
-    this.closeAddMemberModal();
+    setTimeout(() => {
+      try {
+        this.teamMemberService.addMember(newMember);
+        this.loading = false;
+        this.successMessage = 'Member added successfully!';
+        setTimeout(() => {
+            this.successMessage = '';
+            this.loading = false;
+          this.closeAddMemberModal();
+          },1500
+        );
+      } catch (err) {
+        this.loading = false;
+        this.errorMessage = 'Something went wrong while saving.';
+      }
+    }, 1500)
+
   }
 
   calculatePagination = () => {
@@ -161,14 +182,7 @@ export class TeamMembersComponent implements OnInit {
     }
   }
 
-  // Placeholder for filter action
-  openFilters() {
-    console.log('Filters button clicked');
-    // Implement filter logic here
-  }
-
   openEditModal(member: any) {
-    console.log('member', member)
     this.selectedMember = member;
     this.editModalOpen = true;
   }
