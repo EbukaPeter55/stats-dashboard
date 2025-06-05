@@ -1,27 +1,31 @@
 # StatsDashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.19.
+**StatsDashboard** is a user-friendly dashboard designed for managing team members. Built with **Angular**, it leverages **RxJS** for reactive programming and **localStorage** for state management, allowing for seamless team member operations without the need for a backend.
 
-## Development server
+## Features
 
+- **Create Team Member**: Add new team members to the system.
+- **Edit Team Member**: Modify existing team member details.
+- **View Team Member**: View the profile of a selected team member.
+- **Delete Team Member**: Remove a team member from the list.
+
+### Technologies Used
+
+- **Angular**: Frontend framework.
+- - **Typescript**: Frontend framework.
+- **RxJS**: Reactive programming library for managing asynchronous data streams.
+- **localStorage**: Browser-based storage for saving team member data.
+
+## Installation
+
+Follow the steps below to set up and run the project locally.
+
+### Prerequisites
+
+- **Node.js (v20)**: Ensure you have **Node.js version 20** installed on your machine. You can verify your version by running `node -v`.
+- **Angular CLI (v18.2.19)**: The project was generated using Angular CLI version **18.2.19**. Make sure you have the correct version installed. You can check with `ng version`.
+
+## How to run and start the project.
+Clone repository
+Install all dependencies using **npm install**
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
