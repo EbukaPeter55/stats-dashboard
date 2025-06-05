@@ -6,11 +6,12 @@ import {TeamMembersService} from './services/team-members.service';
 import {Subscription} from 'rxjs';
 import {TeamMember} from './models/team-member.model';
 import {EditTeamMemberComponent} from './components/edit-team-member/edit-team-member.component';
+import {DeleteTeamMemberComponent} from './components/delete-team-member/delete-team-member.component';
 
 @Component({
   selector: 'app-team-members',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ModalComponent, EditTeamMemberComponent],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent, EditTeamMemberComponent, DeleteTeamMemberComponent],
   templateUrl: './team-members.component.html',
   styleUrl: './team-members.component.scss'
 })
@@ -28,6 +29,10 @@ export class TeamMembersComponent implements OnInit {
   editModalOpen = false;
   selectedMember: TeamMember | null = null;
   private membersSub!: Subscription;
+  deleteModalOpen = false;
+  memberToDelete: TeamMember | null = null;
+
+
 
   constructor(private fb: FormBuilder, private teamMemberService: TeamMembersService) {
   }
@@ -54,6 +59,23 @@ export class TeamMembersComponent implements OnInit {
 
   openAddMemberModal = () => {
     this.isAddModalOpen = true;
+  }
+
+  openDeleteConfirm = (member: TeamMember) => {
+    this.memberToDelete = member;
+    this.deleteModalOpen = true;
+  }
+
+  closeDeleteModal = () => {
+    this.deleteModalOpen = false;
+    this.memberToDelete = null;
+  }
+
+  confirmDelete = () => {
+    if (this.memberToDelete) {
+      this.teamMemberService.deleteMember(this.memberToDelete.email);
+      this.closeDeleteModal();
+    }
   }
 
   closeAddMemberModal = () => {
@@ -141,10 +163,6 @@ export class TeamMembersComponent implements OnInit {
   closeEditModal = () => {
     this.editModalOpen = false;
     this.selectedMember = null;
-  }
-
-  deleteMember = (member: any) => {
-    this.teamMemberService.deleteMember(member);
   }
 
 }

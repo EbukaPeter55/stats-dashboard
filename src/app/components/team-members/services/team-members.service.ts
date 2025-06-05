@@ -16,10 +16,6 @@ export class TeamMembersService {
     this.members$ = this.membersSubject.asObservable();
   }
 
-  getMembers() {
-    return this.membersSubject.value;
-  }
-
   addMember(member: any) {
     const updatedMembers = [...this.membersSubject.value, member];
     this.membersSubject.next(updatedMembers);
@@ -35,8 +31,8 @@ export class TeamMembersService {
     this.saveMembers(updated);
   }
 
-  deleteMember(member: any) {
-    const updatedMembers = this.membersSubject.value.filter(m => m.email !== member.email);
+  deleteMember(email: string) {
+    const updatedMembers = this.membersSubject.value.filter(m => m.email !== email);;
     this.membersSubject.next(updatedMembers);
     this.saveMembers(updatedMembers);
   }

@@ -85,6 +85,15 @@
     [member]="selectedMember"
     (close)="closeEditModal()">
   </app-edit-team-member>
+<!--End of Edit modal-->
+
+  <!-- Delete Confirm Modal -->
+  <app-delete-team-member
+    [isOpen]="deleteModalOpen"
+    [memberName]="memberToDelete?.name || ''"
+    (confirmDelete)="confirmDelete()"
+    (close)="closeDeleteModal()">
+  </app-delete-team-member>
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
@@ -173,7 +182,7 @@
           </div>
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-right">
-          <button (click)="deleteMember(member)" class="text-gray-400 hover:text-red-600 p-1">
+          <button (click)="openDeleteConfirm(member)" class="text-gray-400 hover:text-red-600 p-1">
             <!-- SVG Trash Icon -->
             <svg class="w-5 h-5" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none"
                  viewBox="0 0 24 24"
