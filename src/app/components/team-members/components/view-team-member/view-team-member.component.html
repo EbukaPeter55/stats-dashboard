@@ -1,0 +1,22 @@
+<app-modal [isOpen]="isOpen" title="Team Member Details" (close)="closeModal()">
+  <div class="p-4 space-y-4" *ngIf="member">
+    <div class="flex flex-col space-y-2">
+      <div><strong>Name:</strong> {{ member.name }}</div>
+      <div><strong>Email:</strong> {{ member.email }}</div>
+      <div><strong>Role:</strong> {{ member.role }}</div>
+      <div><strong>Status:</strong> {{ member.status }}</div>
+      <div><strong>Teams:</strong> {{ member.teams.join(', ') }}</div>
+      <div *ngIf="member.additionalTeams && member.additionalTeams.length ">
+        <strong>Additional Teams:</strong> {{ member.additionalTeams.join(', ') }}
+      </div>
+      <div *ngIf="member.avatarUrl">
+        <strong>Avatar:</strong>
+        <img [src]="member.avatarUrl" alt="avatar" class="w-16 h-16 rounded-full mt-2">
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end">
+    <button (click)="closeModal()" class="px-4 py-2 bg-blue-600 text-white rounded">Close</button>
+  </div>
+</app-modal>

@@ -6,5 +6,5 @@ export interface TeamMember {
   role: string;
   email: string;
   teams: string[];
-  additionalTeams: number;
+  additionalTeams?: string[];
 }

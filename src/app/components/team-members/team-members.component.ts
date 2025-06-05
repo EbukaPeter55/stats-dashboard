@@ -7,11 +7,12 @@ import {Subscription} from 'rxjs';
 import {TeamMember} from './models/team-member.model';
 import {EditTeamMemberComponent} from './components/edit-team-member/edit-team-member.component';
 import {DeleteTeamMemberComponent} from './components/delete-team-member/delete-team-member.component';
+import {ViewTeamMemberComponent} from './components/view-team-member/view-team-member.component';
 
 @Component({
   selector: 'app-team-members',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ModalComponent, EditTeamMemberComponent, DeleteTeamMemberComponent],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent, EditTeamMemberComponent, DeleteTeamMemberComponent, ViewTeamMemberComponent],
   templateUrl: './team-members.component.html',
   styleUrl: './team-members.component.scss'
 })
@@ -31,7 +32,7 @@ export class TeamMembersComponent implements OnInit {
   private membersSub!: Subscription;
   deleteModalOpen = false;
   memberToDelete: TeamMember | null = null;
-
+  detailsModalOpen = false;
 
 
   constructor(private fb: FormBuilder, private teamMemberService: TeamMembersService) {
@@ -66,6 +67,18 @@ export class TeamMembersComponent implements OnInit {
     this.deleteModalOpen = true;
   }
 
+  openDetails = (member: TeamMember) => {
+    this.selectedMember = member;
+    this.detailsModalOpen = true;
+  }
+
+  closeDetailsModal = () => {
+    this.detailsModalOpen = false;
+    this.selectedMember = null;
+  }
+
+
+
   closeDeleteModal = () => {
     this.deleteModalOpen = false;
     this.memberToDelete = null;
@@ -99,7 +112,7 @@ export class TeamMembersComponent implements OnInit {
       status: formValue.status,
       statusColor: 'bg-green-500',
       teams: teamsArray,
-      additionalTeams: 0,
+      additionalTeams: [],
       avatarUrl:
         'https://placehold.co/40x40/E2E8F0/718096?text=' +
         formValue.name
