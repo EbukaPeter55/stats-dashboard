@@ -49,6 +49,9 @@ export class TeamMembersComponent implements OnInit {
     });
   }
 
+  /**
+   * Initialize the add member form
+   */
   initAddMemberForm = () => {
     this.addMemberForm = this.fb.group({
       name: ['', Validators.required],
