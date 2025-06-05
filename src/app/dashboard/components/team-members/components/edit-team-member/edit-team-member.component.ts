@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angula
 import {TeamMember} from '../../models/team-member.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ModalComponent} from '../../../../shared/components/modal/modal.component';
+import {ModalComponent} from '../../../../../shared/components/modal/modal.component';
 import {TeamMembersService} from '../../services/team-members.service';
 
 @Component({

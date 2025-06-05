@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ModalComponent} from '../../../../shared/components/modal/modal.component';
+import {ModalComponent} from '../../../../../shared/components/modal/modal.component';
 import {CommonModule} from '@angular/common';
 
 @Component({

@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ModalComponent} from '../../shared/components/modal/modal.component';
+import {ModalComponent} from '../../../shared/components/modal/modal.component';
 import {TeamMembersService} from './services/team-members.service';
 import {Subscription} from 'rxjs';
 import {TeamMember} from './models/team-member.model';
