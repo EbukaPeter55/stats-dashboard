@@ -15,11 +15,11 @@ export class DeleteTeamMemberComponent {
   @Output() confirmDelete = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
 
-  confirm() {
+  confirm = () => {
     this.confirmDelete.emit();
   }
 
-  closeModal() {
+  closeModal = () => {
     this.close.emit();
   }
 

@@ -8,18 +8,17 @@ import {TeamMember} from './models/team-member.model';
 import {EditTeamMemberComponent} from './components/edit-team-member/edit-team-member.component';
 import {DeleteTeamMemberComponent} from './components/delete-team-member/delete-team-member.component';
 import {ViewTeamMemberComponent} from './components/view-team-member/view-team-member.component';
+import {HeaderComponent} from './components/header/header.component';
 
 @Component({
   selector: 'app-team-members',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ModalComponent, EditTeamMemberComponent, DeleteTeamMemberComponent, ViewTeamMemberComponent],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent, EditTeamMemberComponent, DeleteTeamMemberComponent, ViewTeamMemberComponent, HeaderComponent],
   templateUrl: './team-members.component.html',
   styleUrl: './team-members.component.scss'
 })
 export class TeamMembersComponent implements OnInit {
-
   members: TeamMember[] = [];
-  // Pagination properties
   currentPage = 1;
   itemsPerPage = 5;
   totalPages = Math.ceil(this.members.length / this.itemsPerPage);
@@ -29,14 +28,13 @@ export class TeamMembersComponent implements OnInit {
   paginatedMembers: any[] = [];
   editModalOpen = false;
   selectedMember: TeamMember | null = null;
-  private membersSub!: Subscription;
   deleteModalOpen = false;
   memberToDelete: TeamMember | null = null;
   detailsModalOpen = false;
   loading = false;
   successMessage = '';
   errorMessage = '';
-
+  private membersSub!: Subscription;
 
   constructor(private fb: FormBuilder, private teamMemberService: TeamMembersService) {
   }
@@ -79,7 +77,6 @@ export class TeamMembersComponent implements OnInit {
     this.detailsModalOpen = false;
     this.selectedMember = null;
   }
-
 
 
   closeDeleteModal = () => {
@@ -135,8 +132,8 @@ export class TeamMembersComponent implements OnInit {
         setTimeout(() => {
             this.successMessage = '';
             this.loading = false;
-          this.closeAddMemberModal();
-          },1500
+            this.closeAddMemberModal();
+          }, 1500
         );
       } catch (err) {
         this.loading = false;
@@ -161,7 +158,7 @@ export class TeamMembersComponent implements OnInit {
     this.paginatedMembers = this.members.slice(startIndex, endIndex);
   }
 
-  goToPage(page: number) {
+  goToPage = (page: number) => {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
       this.updatePaginatedMembers();
@@ -182,7 +179,7 @@ export class TeamMembersComponent implements OnInit {
     }
   }
 
-  openEditModal(member: any) {
+  openEditModal = (member: any) => {
     this.selectedMember = member;
     this.editModalOpen = true;
   }

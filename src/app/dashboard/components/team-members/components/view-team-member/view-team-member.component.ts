@@ -15,7 +15,7 @@ export class ViewTeamMemberComponent {
   @Input() member!: TeamMember | null;
   @Output() close = new EventEmitter<void>();
 
-  closeModal() {
+  closeModal = () => {
     this.close.emit();
   }
 

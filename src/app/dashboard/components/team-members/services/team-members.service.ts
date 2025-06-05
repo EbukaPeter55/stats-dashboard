@@ -8,7 +8,7 @@ import {TeamMember} from '../models/team-member.model';
 export class TeamMembersService {
   members$;
   private readonly storageKey = 'team-members';
-  private membersSubject: BehaviorSubject<any[]>;
+  membersSubject: BehaviorSubject<any[]>;
 
   constructor() {
     const initialMembers = this.loadMembers();
@@ -16,7 +16,7 @@ export class TeamMembersService {
     this.members$ = this.membersSubject.asObservable();
   }
 
-  addMember(member: any) {
+  addMember = (member: any) => {
     const updatedMembers = [...this.membersSubject.value, member];
     this.membersSubject.next(updatedMembers);
     this.saveMembers(updatedMembers);
@@ -31,18 +31,18 @@ export class TeamMembersService {
     this.saveMembers(updated);
   }
 
-  deleteMember(email: string) {
+  deleteMember = (email: string) => {
     const updatedMembers = this.membersSubject.value.filter(m => m.email !== email);;
     this.membersSubject.next(updatedMembers);
     this.saveMembers(updatedMembers);
   }
 
-  private loadMembers = () => {
+  loadMembers = () => {
     const stored = localStorage.getItem(this.storageKey);
     return stored ? JSON.parse(stored) : [];
   }
 
-  private saveMembers(members: any[]) {
+  saveMembers = (members: any[]) => {
     localStorage.setItem(this.storageKey, JSON.stringify(members));
   }
 
