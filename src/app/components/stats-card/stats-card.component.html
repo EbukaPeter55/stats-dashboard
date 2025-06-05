@@ -1,4 +1,4 @@
-<div class="flex max-md:flex-wrap gap-4 mt-5 w-full">
+<div class="flex max-md:flex-wrap gap-4 mt-5">
   <app-card
     *ngFor="let stat of stats"
     [title]="stat.title"
@@ -6,6 +6,7 @@
     [subtext]="stat.subtext"
     [trend]="stat.trend"
     [trendDirection]="stat.trendDirection"
+    class="card-top-wrapper"
   >
   </app-card>
 </div>

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ChartType, ChartData, Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
+import {Component} from '@angular/core';
+import {ChartType, ChartData, Chart, DoughnutController, ArcElement, Tooltip, Legend} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
@@ -15,7 +15,6 @@ export class RevenueContributionComponent {
   public doughnutChartType: ChartType = 'doughnut';
 
   public doughnutChartData: ChartData<'doughnut'> = {
-    labels: ['Bitcoin', 'Ethereum', 'Solana', 'Sales Training'],
     datasets: [
       {
         data: [450, 300, 225, 200],

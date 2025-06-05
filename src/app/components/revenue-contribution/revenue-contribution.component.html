@@ -1,5 +1,28 @@
-<h3 class="text-center text-2xl font-bold">$1,975.33</h3>
-<canvas baseChart
-        [data]="doughnutChartData"
-        [type]="doughnutChartType">
-</canvas>
+<div class="p-4 bg-white rounded-lg shadow">
+  <h2 class="text-center text-lg font-semibold mb-4">Revenue Contribution</h2>
+  <canvas baseChart
+          [data]="doughnutChartData"
+          [type]="doughnutChartType">
+  </canvas>
+
+  <div class="mt-4">
+    <div class="flex justify-end gap-8 text-sm font-normal mb-2 text-[#1A1A1A66]">
+      <span>This month</span>
+      <span>Total</span>
+    </div>
+    <div class="flex justify-between text-sm">
+      <span class="text-[#757575]">Sales training</span>
+      <div class="flex gap-4">
+        <span class="font-semibold">$384.93</span>
+        <span class="text-green-500">+232.19</span>
+      </div>
+    </div>
+    <div class="flex justify-between text-sm mt-1">
+      <span class="text-[#757575]">Other expenses</span>
+      <div class="flex gap-4">
+        <span>$200</span>
+        <span class="text-red-500">-25</span>
+      </div>
+    </div>
+  </div>
+</div>
