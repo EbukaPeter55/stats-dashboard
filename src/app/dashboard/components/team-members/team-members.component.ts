@@ -1,9 +1,9 @@
 import {CommonModule} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ModalComponent} from '../../../shared/components/modal/modal.component';
 import {TeamMembersService} from './services/team-members.service';
-import {Subscription} from 'rxjs';
+import {Subject, takeUntil} from 'rxjs';
 import {TeamMember} from './models/team-member.model';
 import {EditTeamMemberComponent} from './components/edit-team-member/edit-team-member.component';
 import {DeleteTeamMemberComponent} from './components/delete-team-member/delete-team-member.component';
@@ -17,7 +17,8 @@ import {HeaderComponent} from './components/header/header.component';
   templateUrl: './team-members.component.html',
   styleUrl: './team-members.component.scss'
 })
-export class TeamMembersComponent implements OnInit {
+
+export class TeamMembersComponent implements OnInit, OnDestroy {
   members: TeamMember[] = [];
   currentPage = 1;
   itemsPerPage = 5;
@@ -34,15 +35,18 @@ export class TeamMembersComponent implements OnInit {
   loading = false;
   successMessage = '';
   errorMessage = '';
-  private membersSub!: Subscription;
+  private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder, private teamMemberService: TeamMembersService) {
   }
 
   ngOnInit() {
     this.initAddMemberForm();
+    this.getMembers();
+  }
 
-    this.membersSub = this.teamMemberService.members$.subscribe(members => {
+  getMembers = () => {
+    this.teamMemberService.members$.pipe(takeUntil(this.destroy$)).subscribe(members => {
       this.members = members;
       this.calculatePagination();
       this.updatePaginatedMembers();
@@ -190,6 +194,11 @@ export class TeamMembersComponent implements OnInit {
   closeEditModal = () => {
     this.editModalOpen = false;
     this.selectedMember = null;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(undefined);
+    this.destroy$.complete();
   }
 
 }
